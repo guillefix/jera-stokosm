@@ -1,6 +1,30 @@
 # jera-specs
 Specs created for Jera in Checkvist. 
 
+This is an idea called Jera. Ignore the "Community v1" as it's an old version. Also, I would check the "Data structure" section first to get an idea of what it is about. The overarching idea, reached after a lot of discussions and brain storming, is that the objective of the platform is to facilitate the purposeful creative process; and that this is divided in three main aspects:
+
+*Identifying the things that people want (i.e. specific goals"to
+improve society),
+*Finding ways of achieving these goals (through
+projects), and
+*Identifying and organizing the requirements of these projects.
+
+These correspond to the main data types, and each of them can be further sub-organized into categories, via tags (like transportation, health, IT, etc.), although these don't give the main structure (they are actually ancillary) to the system, but connections. So the proper way to implement a typical structure is to have a big goal called "Improving transportation" with a lot of children goals (more details about the type of connections in the document).
+
+The important thing is that people should find what they are looking for as readily as possible. However, most people don't know what to look for other than "improve the world", so having a way to explore ideas is useful. That is why we put a lot of emphasis on connections between ideas (which was inspired by some other guys working on something called "Rhizi" as well as a set of idea tools like this one: http://hackathonideas.tk/).
+
+People exploring the "goals section", whether in "list view" or "graph view", would be able to find the goals people are more interested in, as well as related goals. They will then find projects that people are proposing/working on to solve that goal, and also find the requisites that that project is looking for. Maybe they will even offer themselves for help if they have that requisite (could be a skill).
+
+Some other user could be exploring the "requisites section" directly, to look for things to help in, if they had a certain skill/resource they wanted to offer/use. They could even filter the requisites for requisites used for projects that are aimed to solving a certain goal, or goals.
+
+Basically, what we tried to design is the best way in which people with the intention of improving the world could find what they wanted to, no matter from which angle they came.
+
+For each of the "goals", "projects", "requisites", there is a corresponding page that holds information about it, as well as a "newsfeed" (a name that maybe isn't that good, as it reminds me of Facebook's) that basically has the "blog" and "discussion" features you talk about for the creative process (I actually put this "blog" and "discussion" features separately but a friend said maybe it's best together, although I am not convinced).
+
+So that people that want to discuss about a certain goal, will go to that goal's page (which will load the "newsfeed"/thread page) by default, and they will post a new thread, like in a forum, or they will search for threads (sorted by date or vote-ranking), and discuss in it etc.
+
+That should give an idea of what this is. The details are below
+
 # Community Specification #
 
 ## Top bar
