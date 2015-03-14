@@ -209,7 +209,7 @@ guillefix's note: Ok, yeah.
   - **List View**
     - Contains three (scrollable column) sections:
       - Goals
-      - Projects
+      - Projects - #To add: progress indicators (bars for e.g.)#
       - Requesites
     - Display Rules
       - Filtering elements are shown on top and highlighted in a different colour
