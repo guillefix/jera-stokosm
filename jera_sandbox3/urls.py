@@ -17,5 +17,6 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
+	url(r'^stokosm', include('stokosm.urls', namespace="stokosm")),
     url(r'^admin/', include(admin.site.urls)),
 ]

@@ -1,17 +1,16 @@
 from django.db import models
+from datetime import datetime
 
 class GeneralContent(models.Model):
   name = models.CharField(max_length=200)
-  pub_date = models.DateTimeField('date published')
+  pub_date = models.DateTimeField('date published', default=datetime.now)
   def __unicode__(self):    #__str__ in Python3
     return self.name
   class Meta:
     abstract = True
 
 class Node(GeneralContent):
-  related = models.ManyToManyField("self", through='Connection', symmetrical=False)
-  class Meta:
-    abstract = True
+  related = models.ManyToManyField("self", through='Connection', symmetrical=False, related_name='reverse_related')
 
 class Goal(Node):
   pass
@@ -20,8 +19,8 @@ class Requirement(Node):
   pass
 
 class Project(Node):
-  linked_goals = models.ManyToManyField(Goal, through='Link', related_name='goals')
-  linked_req = models.ManyToManyField(Requirement, through='Link', related_name='requirements')
+  linked_goals = models.ManyToManyField(Goal, through='Link', related_name='linked_projects')
+  linked_req = models.ManyToManyField(Requirement, through='Link', related_name='linked_projects')
 
 class Connection(GeneralContent):
   goal1 = models.ForeignKey(Goal, related_name='connections', null=True, blank=True)
@@ -32,13 +31,13 @@ class Connection(GeneralContent):
   project2 = models.ForeignKey(Project, related_name='reverse_connections', null=True, blank=True)
 
   DIRECTION_CHOICES = (
-    (0, 'Child'),
-    (1, 'Parent')
+    (0, 'Child'), #goal2 is child of goal1
+    (1, 'Parent') #goal2 is parent of goal1
   )
   direction = models.IntegerField(default=0, choices=DIRECTION_CHOICES)
   directed = models.BooleanField(default=False)
 
 class Link(GeneralContent):
-  goal = models.ForeignKey(Goal, null=True, blank=True)
-  requirement = models.ForeignKey(Requirement, null=True, blank=True)
-  project = models.ForeignKey(Project)
+  goal = models.ForeignKey(Goal, related_name="links", null=True, blank=True)
+  requirement = models.ForeignKey(Requirement, related_name="links", null=True, blank=True)
+  project = models.ForeignKey(Project, related_name="links")

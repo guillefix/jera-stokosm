@@ -1,0 +1,40 @@
+<h1>Jera Projects</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<h3><a href="{% url 'stokosm:create' node_type='goal' %}">Create new goal</a></h3>
+<h3><a href="{% url 'stokosm:create' node_type='requirement' %}">Create new requirement</a></h3>
+<h3><a href="{% url 'stokosm:create' node_type='project' %}">Create new project</a></h3>
+
+<h2>Latest Goals</h2>
+{% if latest_goal_list%}
+	<ul>
+	{% for goal in latest_goal_list %}
+		<li><a href="{% url 'stokosm:detail' node_type='goal' node_id=goal.id %}">{{ goal.name }}</a></li>
+		{% endfor %}
+	</ul>
+{% else %}
+	<p>No goals are available.</p>
+{% endif %}
+
+<h2>Latest Requirements</h2>
+{% if latest_requirement_list%}
+	<ul>
+	{% for requirement in latest_requirement_list %}
+		<li><a href="{% url 'stokosm:detail' node_type='requirement' node_id=requirement.id %}">{{ requirement.name }}</a></li>
+		{% endfor %}
+	</ul>
+{% else %}
+	<p>No requirements are available.</p>
+{% endif %}
+
+<h2>Latest Projects</h2>
+{% if latest_project_list%}
+	<ul>
+	{% for project in latest_project_list %}
+		<li><a href="{% url 'stokosm:detail' node_type='project' node_id=project.id %}">{{ project.name }}</a></li>
+		{% endfor %}
+	</ul>
+{% else %}
+	<p>No projects are available.</p>
+{% endif %}

@@ -1,0 +1,25 @@
+<h1>Link: {{ link.name }}</h1>
+
+<form onsubmit="return confirm('Do you really want to delete?');" action="{% url 'stokosm:link_detail' link_id=link.id %}" method="post">
+{% csrf_token %}
+<label>Delete link? <input type="submit" name="delete" value="delete"></label>
+</form>
+
+<br>
+
+<form action="{% url 'stokosm:edit_link' link_id=link.id %}" method="get">
+{% csrf_token %}
+<input type="submit" name="edit" value="Edit">
+</form>
+
+<h3>Nodes</h3>
+
+{% if link.goal %}
+
+	<p>{{ link.project }}--{{ link.goal }}</p>
+
+{% elif link.requirement %}
+	<p>{{ link.project }}--{{ link.requirement }}</p>
+
+
+{% endif %}

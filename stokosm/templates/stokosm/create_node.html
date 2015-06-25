@@ -1,0 +1,8 @@
+<h3>Add new {{ node_type }}</h3>
+
+<form action="{% url 'stokosm:create' node_type=node_type %}" method="post">
+{% csrf_token %}
+{{ form }}
+<input type="submit" value="Submit" />
+
+</form>
