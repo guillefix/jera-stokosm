@@ -1,8 +1,0 @@
-<h3>Edit {{ node_type }}: {{ node.name }}</h3>
-
-<form action="{% url 'stokosm:edit' node_id=node.id node_type=node_type %}" method="post">
-{% csrf_token %}
-{{ form }}
-<input type="submit" value="Submit" />
-
-</form>
