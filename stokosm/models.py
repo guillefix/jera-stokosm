@@ -11,6 +11,7 @@ class GeneralContent(models.Model):
 
 class Node(GeneralContent):
   related = models.ManyToManyField("self", through='Connection', symmetrical=False, related_name='reverse_related')
+  description = models.CharField(max_length=2000)
 
 class Goal(Node):
   pass
@@ -23,6 +24,7 @@ class Project(Node):
   linked_req = models.ManyToManyField(Requirement, through='Link', related_name='linked_projects')
 
 class Connection(GeneralContent):
+  description = models.CharField(max_length=2000)
   goal1 = models.ForeignKey(Goal, related_name='connections', null=True, blank=True)
   goal2 = models.ForeignKey(Goal, related_name='reverse_connections', null=True, blank=True)
   requirement1 = models.ForeignKey(Requirement, related_name='connections', null=True, blank=True)
@@ -38,6 +40,7 @@ class Connection(GeneralContent):
   directed = models.BooleanField(default=False)
 
 class Link(GeneralContent):
+  description = models.CharField(max_length=2000)
   goal = models.ForeignKey(Goal, related_name="links", null=True, blank=True)
   requirement = models.ForeignKey(Requirement, related_name="links", null=True, blank=True)
   project = models.ForeignKey(Project, related_name="links")
