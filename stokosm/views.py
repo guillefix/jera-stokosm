@@ -43,7 +43,6 @@ def detail(request, node_type, node_id):
 			'node_type': node_type, 
 			'connections_form': connections_form, 
 			'linked_projects_form': linked_projects_form}
-		return render(request, 'stokosm/detail.html', context)
 	if node_type == "requirement":
 		requirement = get_object_or_404(Requirement, pk=node_id)
 		if request.method == 'POST' and ('delete' in request.POST):
@@ -67,7 +66,6 @@ def detail(request, node_type, node_id):
 			'node_type': node_type, 
 			'connections_form': connections_form, 
 			'linked_projects_form': linked_projects_form}
-		return render(request, 'stokosm/detail.html', context)
 	if node_type == "project":
 		project = get_object_or_404(Project, pk=node_id)
 		if request.method == 'POST' and ('delete' in request.POST):
@@ -99,7 +97,7 @@ def detail(request, node_type, node_id):
 			'connections_form': connections_form, 
 			'linked_goals_form': linked_goals_form, 
 			'linked_requirements_form': linked_requirements_form}
-		return render(request, 'stokosm//detail/node_detail.html', context)
+	return render(request, 'stokosm/detail/node_detail.html', context)
 
 def create_node(request, node_type):
 	if node_type == "goal":

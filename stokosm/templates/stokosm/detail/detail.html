@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "stokosm/base.html" %}
 
 {% block content %}
 
@@ -15,5 +15,8 @@
 {% csrf_token %}
 <input type="submit" name="edit" value="Edit">
 </form>
+
+{% block detail %}
+{% endblock %}
 
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends "detail/detail.html" %}
+{% extends "stokosm/detail/detail.html" %}
 {% block header %}Link: {{ link.name }}{% endblock %}
 
 {% block delete_form_action %}
@@ -8,6 +8,8 @@
 {% block edit_form_action %}
 {% url 'stokosm:edit_link' link_id=link.id %}
 {% endblock %}
+
+{% block detail %}
 
 <h3>Linked nodes</h3>
 
@@ -20,3 +22,5 @@
 
 
 {% endif %}
+
+{% endblock %}

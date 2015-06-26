@@ -1,4 +1,4 @@
-{% extends "detail/detail.html" %}
+{% extends "stokosm/detail/detail.html" %}
 {% block header %}{{ node_type }}: {{ node.name }}{% endblock %}
 
 {% block delete_form_action %}
@@ -8,6 +8,8 @@
 {% block edit_form_action %}
 {% url 'stokosm:edit' node_id=node.id node_type=node_type %}
 {% endblock %}
+
+{% block detail %}
 
 <h4>Add related {{ node_type }}</h4>
 
@@ -128,3 +130,5 @@
 </ul>
 
 {% endif %}
+
+{% endblock %}

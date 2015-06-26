@@ -1,4 +1,4 @@
-{% extends "detail/detail.html" %}
+{% extends "stokosm/detail/detail.html" %}
 {% block header %}Connection: {{ connection.name }}{% endblock %}
 
 {% block delete_form_action %}
@@ -8,6 +8,8 @@
 {% block edit_form_action %}
 {% url 'stokosm:edit_connection' connection_id=connection.id %}
 {% endblock %}
+
+{% block detail %}
 
 <p>Directed: {{ connection.directed }}</p>
 
@@ -34,3 +36,5 @@ if ({{ connection.directed|lower }}) {
 }
 document.getElementById("connection_type").innerHTML = c_type;
 </script>
+
+{% endblock %}
