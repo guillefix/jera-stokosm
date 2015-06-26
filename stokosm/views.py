@@ -26,7 +26,7 @@ def detail(request, node_type, node_id):
 		if request.method == 'POST':
 			form = GoalConnectionForm(request.POST)
 			if form.is_valid():
-				form.save(goal1=node.goal)
+				form.save(goal1=goal)
 				return HttpResponseRedirect(reverse('stokosm:index'))
 		else:
 			form = GoalConnectionForm()
@@ -39,7 +39,7 @@ def detail(request, node_type, node_id):
 		if request.method == 'POST':
 			form = RequirementConnectionForm(request.POST)
 			if form.is_valid():
-				form.save(requirement1=node.requirement)
+				form.save(requirement1=requirement)
 				return HttpResponseRedirect(reverse('stokosm:index'))
 		else:
 			form = RequirementConnectionForm()
@@ -52,17 +52,17 @@ def detail(request, node_type, node_id):
 		if request.method == 'POST' and ('add_connected_project' in request.POST):
 			form = ProjectConnectionForm(request.POST)
 			if form.is_valid():
-				form.save(project1=node.project)
+				form.save(project1=project)
 				return HttpResponseRedirect(reverse('stokosm:index'))
 		elif request.method == 'POST' and ('add_linked_goal' in request.POST):
 			form = GoalLinkForm(request.POST)
 			if form.is_valid():
-				form.save(project=node.project)
+				form.save(project=project)
 				return HttpResponseRedirect(reverse('stokosm:index'))
 		elif request.method == 'POST' and ('add_linked_requirement' in request.POST):
 			form = ProjectConnectionForm(request.POST)
 			if form.is_valid():
-				form.save(project=node.project)
+				form.save(project=project)
 				return HttpResponseRedirect(reverse('stokosm:index'))
 		else:
 			connections_form = ProjectConnectionForm()
