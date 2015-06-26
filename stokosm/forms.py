@@ -51,9 +51,10 @@ class ProjectConnectionForm(ModelForm):
 		fields = ['project2', 'directed', 'direction']
 
 class LinkForm(ModelForm):
-	def save(self, force_insert=False, force_update=False, commit=True, project=None):
+	def save(self, context, force_insert=False, force_update=False, commit=True):
 		instance = super(LinkForm, self).save(commit=False)
-		instance.project = project
+		for node in context:
+			instance[node] = context[node]
 		if commit:
 			link_creator(instance)
 		return instance
@@ -69,3 +70,8 @@ class RequirementLinkForm(LinkForm):
 	class Meta:
 		model = Link
 		fields = ['requirement']
+
+class ProjectLinkForm(LinkForm):
+	class Meta:
+		model = Link
+		fields = ['project']

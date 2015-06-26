@@ -18,8 +18,8 @@
 {% if node_type == "goal" %}
 <form action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
 {% csrf_token %}
-{{ form }}
-<input type="submit" value="Submit" />
+{{ connections_form }}
+<input type="submit" name="add_connected_goal" value="Submit" />
 
 </form>
 
@@ -27,6 +27,23 @@
 <ul>
 {% for connection in node.goal.connections.all %}
 	<li><a href="{% url 'stokosm:connection_detail' connection_id=connection.id %}">{{ connection.goal2.name }}</a></li>
+{% endfor %}
+</ul>
+
+<h3>Linked projects</h3>
+
+<h4>Add linked project</h4>
+
+<form action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
+{% csrf_token %}
+{{ linked_projects_form }}
+<input type="submit" name="add_linked_project" value="Submit" />
+
+</form>
+
+<ul>
+{% for link in node.goal.links.all %}
+	<li><a href="{% url 'stokosm:link_detail' link_id=link.id %}">{{ link.project.name }}</a></li>
 {% endfor %}
 </ul>
 
@@ -43,6 +60,23 @@
 <ul>
 {% for connection in node.requirement.connections.all %}
 	<li><a href="{% url 'stokosm:connection_detail' connection_id=connection.id %}">{{ connection.requirement2.name }}</a></li>
+{% endfor %}
+</ul>
+
+<h3>Linked projects</h3>
+
+<h4>Add linked project</h4>
+
+<form action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
+{% csrf_token %}
+{{ linked_projects_form }}
+<input type="submit" name="add_linked_project" value="Submit" />
+
+</form>
+
+<ul>
+{% for link in node.requirement.links.all %}
+	<li><a href="{% url 'stokosm:link_detail' link_id=link.id %}">{{ link.project.name }}</a></li>
 {% endfor %}
 </ul>
 

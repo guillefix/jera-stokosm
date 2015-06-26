@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 
 from .models import Node, Goal, Requirement, Project, Connection, Link
 
-from .forms import GoalForm, RequirementForm, ProjectForm, GoalConnectionForm, RequirementConnectionForm, ProjectConnectionForm, RequirementLinkForm, GoalLinkForm
+from .forms import GoalForm, RequirementForm, ProjectForm, GoalConnectionForm, RequirementConnectionForm, ProjectConnectionForm, RequirementLinkForm, GoalLinkForm, ProjectLinkForm
 
 def index(request, error_message=""):
 	latest_goal_list = Goal.objects.order_by('-pub_date')[:5]
@@ -23,27 +23,49 @@ def detail(request, node_type, node_id):
 		if request.method == 'POST' and ('delete' in request.POST):
 			goal.delete()
 			return HttpResponseRedirect(reverse('stokosm:index'))
-		if request.method == 'POST':
+		if request.method == 'POST' and ('add_connected_goal' in request.POST):
 			form = GoalConnectionForm(request.POST)
 			if form.is_valid():
 				form.save(goal1=goal)
 				return HttpResponseRedirect(reverse('stokosm:index'))
+		elif request.method == 'POST' and ('add_linked_project' in request.POST):
+			form = ProjectLinkForm(request.POST)
+			if form.is_valid():
+				context = {'goal': goal}
+				form.save(context)
+				return HttpResponseRedirect(reverse('stokosm:index'))
 		else:
-			form = GoalConnectionForm()
-		return render(request, 'stokosm/detail.html', {'node': goal, 'node_type': node_type, 'form': form})
+			connections_form = GoalConnectionForm()
+			linked_projects_form = ProjectLinkForm()
+			context = {'node': goal, 
+			'node_type': node_type, 
+			'connections_form': connections_form, 
+			'linked_projects_form': linked_projects_form}
+		return render(request, 'stokosm/detail.html', context)
 	if node_type == "requirement":
 		requirement = get_object_or_404(Requirement, pk=node_id)
 		if request.method == 'POST' and ('delete' in request.POST):
 			requirement.delete()
 			return HttpResponseRedirect(reverse('stokosm:index'))
-		if request.method == 'POST':
+		if request.method == 'POST' and ('add_connected_requirement' in request.POST):
 			form = RequirementConnectionForm(request.POST)
 			if form.is_valid():
 				form.save(requirement1=requirement)
 				return HttpResponseRedirect(reverse('stokosm:index'))
+		elif request.method == 'POST' and ('add_linked_project' in request.POST):
+			form = ProjectLinkForm(request.POST)
+			if form.is_valid():
+				context = {'requirement': requirement}
+				form.save(context)
+				return HttpResponseRedirect(reverse('stokosm:index'))
 		else:
-			form = RequirementConnectionForm()
-		return render(request, 'stokosm/detail.html', {'node': requirement, 'node_type': node_type, 'form': form})
+			connections_form = RequirementConnectionForm()
+			linked_projects_form = ProjectLinkForm()
+			context = {'node': goal, 
+			'node_type': node_type, 
+			'connections_form': connections_form, 
+			'linked_projects_form': linked_projects_form}
+		return render(request, 'stokosm/detail.html', context)
 	if node_type == "project":
 		project = get_object_or_404(Project, pk=node_id)
 		if request.method == 'POST' and ('delete' in request.POST):
@@ -57,12 +79,14 @@ def detail(request, node_type, node_id):
 		elif request.method == 'POST' and ('add_linked_goal' in request.POST):
 			form = GoalLinkForm(request.POST)
 			if form.is_valid():
-				form.save(project=project)
+				context = {'project': project}
+				form.save(context)
 				return HttpResponseRedirect(reverse('stokosm:index'))
 		elif request.method == 'POST' and ('add_linked_requirement' in request.POST):
 			form = ProjectConnectionForm(request.POST)
 			if form.is_valid():
-				form.save(project=project)
+				context = {'project': project}
+				form.save(context)
 				return HttpResponseRedirect(reverse('stokosm:index'))
 		else:
 			connections_form = ProjectConnectionForm()
