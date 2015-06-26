@@ -2,19 +2,26 @@
 
 {% block content %}
 
-<h1 id="detail_header">{% block header %}{% endblock %}</h1>
-
-<form onsubmit="return confirm('Do you really want to delete?');" action="{% block delete_form_action %}{% endblock %}" method="post">
-{% csrf_token %}
-<label>Delete connection? <input type="submit" name="delete" value="delete"></label>
-</form>
-
-<br>
-
-<form action="{% block edit_form_action %}{% endblock %}" method="get">
-{% csrf_token %}
-<input type="submit" name="edit" value="Edit">
-</form>
+<div class="row-fluid">
+	<h2 id="detail_header">{% block header %}{% endblock %}</h2>
+	<div class="row-fluid">
+		<div class="span2">
+			<div class="span4">
+				<form onsubmit="return confirm('Do you really want to delete?');" action="{% block delete_form_action %}{% endblock %}" method="post">
+				{% csrf_token %}
+				<input type="submit" name="delete" value="delete">
+				</form>
+			</div>
+			<div class="span8">
+				<form action="{% block edit_form_action %}{% endblock %}" method="get">
+				{% csrf_token %}
+				<input type="submit" name="edit" value="Edit">
+				</form>
+			</div>
+		</div>
+		<div class="span10"></div>
+	</div>
+</div>
 
 {% block detail %}
 {% endblock %}

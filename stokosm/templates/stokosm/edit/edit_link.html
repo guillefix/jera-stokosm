@@ -1,3 +1,7 @@
+{% extends "stokosm/base.html" %}
+
+{% block content %}
+
 <h3>Edit link: {{ link.name }}</h3>
 
 <p>Project: {{ link.project }}</p>
@@ -8,3 +12,5 @@
 <input type="submit" value="Submit" />
 
 </form>
+
+{% endblock %}

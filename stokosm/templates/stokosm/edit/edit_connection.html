@@ -1,3 +1,7 @@
+{% extends "stokosm/base.html" %}
+
+{% block content %}
+
 <h3>Edit connection: {{ connection.name }}</h3>
 
 <p>Goal 1: {{ connection.goal1 }}</p>
@@ -8,3 +12,5 @@
 <input type="submit" value="Submit" />
 
 </form>
+
+{% endblock %}

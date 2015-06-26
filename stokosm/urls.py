@@ -12,5 +12,5 @@ urlpatterns = [
 	url(r'^/connection/(?P<connection_id>[0-9]+)/edit/$', views.edit_connection, name="edit_connection"),
 	url(r'^/link/(?P<link_id>[0-9]+)/$', views.link_detail, name="link_detail"),
 	url(r'^/link/(?P<link_id>[0-9]+)/edit/$', views.edit_link, name="edit_link"),
-#	url(r'^static/(?P<path>.*)$', django.views.static.serve, {'document_root', settings.STATIC_ROOT})
+#	url(r'^/static/(?P<path>.*)$', django.views.static.serve, {'document_root', settings.STATIC_ROOT})
 	]
