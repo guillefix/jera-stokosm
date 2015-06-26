@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 id="detail_header">{% block header %}{% endblock %}</h1>
+
+<form onsubmit="return confirm('Do you really want to delete?');" action="{% block delete_form_action %}{% endblock %}" method="post">
+{% csrf_token %}
+<label>Delete connection? <input type="submit" name="delete" value="delete"></label>
+</form>
+
+<br>
+
+<form action="{% block edit_form_action %}{% endblock %}" method="get">
+{% csrf_token %}
+<input type="submit" name="edit" value="Edit">
+</form>
+
+{% endblock %}

@@ -1,3 +1,7 @@
+{% extends "base.html" %}
+
+{% block content %}
+
 <h3>Add new {{ node_type }}</h3>
 
 <form action="{% url 'stokosm:create' node_type=node_type %}" method="post">
@@ -6,3 +10,5 @@
 <input type="submit" value="Submit" />
 
 </form>
+
+{% endblock %}

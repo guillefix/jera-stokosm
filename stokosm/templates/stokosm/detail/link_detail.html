@@ -1,0 +1,22 @@
+{% extends "detail/detail.html" %}
+{% block header %}Link: {{ link.name }}{% endblock %}
+
+{% block delete_form_action %}
+{% url 'stokosm:link_detail' link_id=link.id %}
+{% endblock %}
+
+{% block edit_form_action %}
+{% url 'stokosm:edit_link' link_id=link.id %}
+{% endblock %}
+
+<h3>Linked nodes</h3>
+
+{% if link.goal %}
+
+	<p>{{ link.project }}--{{ link.goal }}</p>
+
+{% elif link.requirement %}
+	<p>{{ link.project }}--{{ link.requirement }}</p>
+
+
+{% endif %}
