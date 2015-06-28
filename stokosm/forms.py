@@ -5,17 +5,17 @@ from admin import connection_creator, link_creator
 class GoalForm(ModelForm):
 	class Meta:
 		model = Goal
-		fields = ['name',]
+		fields = ['name', 'description']
 
 class RequirementForm(ModelForm):
 	class Meta:
 		model = Requirement
-		fields = ['name',]
+		fields = ['name', 'description']
 
 class ProjectForm(ModelForm):
 	class Meta:
 		model = Project
-		fields = ['name',]
+		fields = ['name', 'description']
 
 class GoalConnectionForm(ModelForm):
 	def save(self, force_insert=False, force_update=False, commit=True, goal1=None):
@@ -26,7 +26,7 @@ class GoalConnectionForm(ModelForm):
 		return instance
 	class Meta:
 		model = Connection
-		fields = ['goal2', 'directed', 'direction']
+		fields = ['goal2', 'directed', 'direction', 'description']
 
 class RequirementConnectionForm(ModelForm):
 	def save(self, force_insert=False, force_update=False, commit=True, requirement1=None):
@@ -37,7 +37,7 @@ class RequirementConnectionForm(ModelForm):
 		return instance
 	class Meta:
 		model = Connection
-		fields = ['requirement2', 'directed', 'direction']
+		fields = ['requirement2', 'directed', 'direction', 'description']
 
 class ProjectConnectionForm(ModelForm):
 	def save(self, force_insert=False, force_update=False, commit=True, project1=None):
@@ -48,7 +48,7 @@ class ProjectConnectionForm(ModelForm):
 		return instance
 	class Meta:
 		model = Connection
-		fields = ['project2', 'directed', 'direction']
+		fields = ['project2', 'directed', 'direction', 'description']
 
 class LinkForm(ModelForm):
 	def save(self, context, force_insert=False, force_update=False, commit=True):
@@ -64,14 +64,14 @@ class LinkForm(ModelForm):
 class GoalLinkForm(LinkForm):
 	class Meta:
 		model = Link
-		fields = ['goal']
+		fields = ['goal', 'description']
 
 class RequirementLinkForm(LinkForm):
 	class Meta:
 		model = Link
-		fields = ['requirement']
+		fields = ['requirement', 'description']
 
 class ProjectLinkForm(LinkForm):
 	class Meta:
 		model = Link
-		fields = ['project']
+		fields = ['project', 'description']

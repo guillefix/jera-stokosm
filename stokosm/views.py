@@ -137,7 +137,7 @@ def edit_node(request, node_type, node_id):
 				form.save()
 				return HttpResponseRedirect(reverse('stokosm:index'))
 		else:
-			form = GoalForm(initial={'name': node.name})
+			form = GoalForm(initial={'name': node.name, 'description': node.description})
 	if node_type == "requirement":
 		if request.method == 'POST':
 			form = RequirementForm(request.POST, instance=node)
@@ -145,7 +145,7 @@ def edit_node(request, node_type, node_id):
 				form.save()
 				return HttpResponseRedirect(reverse('stokosm:index'))
 		else:
-			form = RequirementForm(initial={'name': node.name})
+			form = RequirementForm(initial={'name': node.name, 'description': node.description})
 	if node_type == "project":
 		if request.method == 'POST':
 			form = ProjectForm(request.POST, instance=node)
@@ -153,7 +153,7 @@ def edit_node(request, node_type, node_id):
 				form.save()
 				return HttpResponseRedirect(reverse('stokosm:index'))
 		else:
-			form = ProjectForm(initial={'name': node.name})
+			form = ProjectForm(initial={'name': node.name, 'description': node.description})
 	return render(request, 'stokosm/edit/edit_node.html', {'node': node, 'node_type': node_type, 'form': form})
 
 #CONNECTIONS (DETAIL, EDIT)
@@ -169,7 +169,8 @@ def edit_connection(request, connection_id):
 	connection = get_object_or_404(Connection, pk=connection_id)
 	connection_initial = {'name': connection.name, 
 	'directed': connection.directed, 
-	'direction': connection.direction}
+	'direction': connection.direction,
+	'description': node.description}
 	if connection.goal1:
 		connection_initial['goal1']=connection.goal1
 		connection_initial['goal2']=connection.goal2
@@ -214,7 +215,8 @@ def link_detail(request, link_id):
 def edit_link(request, link_id):
 	link = get_object_or_404(Link, pk=link_id)
 	link_initial = {'name': link.name, 
-	'project': link.project}
+	'project': link.project,
+	'description': node.description}
 	if link.goal:
 		link_initial['goal'] = link.goal
 		if request.method == 'POST':
