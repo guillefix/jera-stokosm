@@ -17,7 +17,7 @@
 	<div class="span6">
 		<h3>Related goals</h3>
 		<h4>Add related {{ node_type }}</h4>
-		<form class="form-inline" action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
+		<form id="detail_form" action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
 		{% csrf_token %}
 		{{ connections_form }}
 		<input type="submit" name="add_connected_goal" value="Submit" />
@@ -32,7 +32,7 @@
 	<div class="span6">
 		<h3>Linked projects</h3>
 		<h4>Add linked project</h4>
-		<form class="form-inline" action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
+		<form action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
 		{% csrf_token %}
 		{{ linked_projects_form }}
 		<input type="submit" name="add_linked_project" value="Submit" />
@@ -49,7 +49,7 @@
 	<div class="span6">
 		<h3>Related requirements</h3>
 		<h4>Add related {{ node_type }}</h4>
-		<form class="form-inline" action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
+		<form action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
 		{% csrf_token %}
 		{{ connections_form }}
 		<input type="submit" value="Submit" />	
@@ -64,7 +64,7 @@
 	<div class="span6">
 		<h3>Linked projects</h3>
 		<h4>Add linked project</h4>
-		<form class="form-inline" action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
+		<form action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
 		{% csrf_token %}
 		{{ linked_projects_form }}
 		<input type="submit" name="add_linked_project" value="Submit" />	
@@ -81,7 +81,7 @@
 	<div class="span6">
 		<h3>Related projects</h3>
 		<h4>Add related {{ node_type }}</h4>
-		<form class="form-inline" action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
+		<form action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
 		{% csrf_token %}
 		{{ connections_form }}
 		<input type="submit" name="add_connected_project" value="Submit" />	
@@ -96,7 +96,7 @@
 	<div class="span3">
 		<h3>Linked goals</h3>
 		<h4>Add linked goal</h4>
-		<form class="form-inline" action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
+		<form action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
 		{% csrf_token %}
 		{{ linked_goals_form }}
 		<input type="submit" name="add_linked_goal" value="Submit" />	
@@ -111,7 +111,7 @@
 	<div class="span3">
 		<h3>Linked requirements</h3>
 		<h4>Add linked requirement</h4>
-		<form class="form-inline" action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
+		<form action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
 		{% csrf_token %}
 		{{ linked_requirements_form }}
 		<input type="submit" name="add_linked_requirement" value="Submit" />

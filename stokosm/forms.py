@@ -1,23 +1,29 @@
 from django.forms import ModelForm
+from django import forms
 from stokosm.models import Goal, Requirement, Project, Connection, Link
 from admin import connection_creator, link_creator
 
-class GoalForm(ModelForm):
+class DescriptionForm(ModelForm):
+	description = forms.CharField( widget=forms.Textarea )
+	class Meta:
+		asbtract = True
+
+class GoalForm(DescriptionForm):
 	class Meta:
 		model = Goal
 		fields = ['name', 'description']
 
-class RequirementForm(ModelForm):
+class RequirementForm(DescriptionForm):
 	class Meta:
 		model = Requirement
 		fields = ['name', 'description']
 
-class ProjectForm(ModelForm):
+class ProjectForm(DescriptionForm):
 	class Meta:
 		model = Project
 		fields = ['name', 'description']
 
-class GoalConnectionForm(ModelForm):
+class GoalConnectionForm(DescriptionForm):
 	def save(self, force_insert=False, force_update=False, commit=True, goal1=None):
 		instance = super(GoalConnectionForm, self).save(commit=False)
 		instance.goal1 = goal1
@@ -28,7 +34,7 @@ class GoalConnectionForm(ModelForm):
 		model = Connection
 		fields = ['goal2', 'directed', 'direction', 'description']
 
-class RequirementConnectionForm(ModelForm):
+class RequirementConnectionForm(DescriptionForm):
 	def save(self, force_insert=False, force_update=False, commit=True, requirement1=None):
 		instance = super(RequirementConnectionForm, self).save(commit=False)
 		instance.requirement1 = requirement1
@@ -39,7 +45,7 @@ class RequirementConnectionForm(ModelForm):
 		model = Connection
 		fields = ['requirement2', 'directed', 'direction', 'description']
 
-class ProjectConnectionForm(ModelForm):
+class ProjectConnectionForm(DescriptionForm):
 	def save(self, force_insert=False, force_update=False, commit=True, project1=None):
 		instance = super(ProjectConnectionForm, self).save(commit=False)
 		instance.project1 = project1
@@ -50,7 +56,7 @@ class ProjectConnectionForm(ModelForm):
 		model = Connection
 		fields = ['project2', 'directed', 'direction', 'description']
 
-class LinkForm(ModelForm):
+class LinkForm(DescriptionForm):
 	def save(self, context, force_insert=False, force_update=False, commit=True):
 		instance = super(LinkForm, self).save(commit=False)
 		for node in context:
