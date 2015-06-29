@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator
 #from django.template import	RequestContext, loader
 
 from .models import Node, Goal, Requirement, Project, Connection, Link
@@ -8,12 +9,34 @@ from .models import Node, Goal, Requirement, Project, Connection, Link
 from .forms import GoalForm, RequirementForm, ProjectForm, GoalConnectionForm, RequirementConnectionForm, ProjectConnectionForm, RequirementLinkForm, GoalLinkForm, ProjectLinkForm
 
 def index(request, error_message=""):
-	latest_goal_list = Goal.objects.order_by('-pub_date')[:5]
-	latest_requirement_list = Requirement.objects.order_by('-pub_date')[:5]
-	latest_project_list = Project.objects.order_by('-pub_date')[:5]
-	context = {'latest_goal_list': latest_goal_list, 
-	'latest_requirement_list': latest_requirement_list, 
-	'latest_project_list': latest_project_list, 
+	pages = {'goal_page': 1, 'requirement_page': 1, 'project_page': 1, }
+	if "goal_page" in request.GET:
+		pages["goal_page"] = request.GET.get("goal_page")
+	if "requirement_page" in request.GET:
+		pages["requirement_page"] = request.GET.get("requirement_page")
+	if "project_page" in request.GET:
+		pages["project_page"] = request.GET.get("project_page")
+
+	goal_paginator = Paginator(Goal.objects.order_by('-pub_date'), 10)
+	requirement_paginator = Paginator(Requirement.objects.order_by('-pub_date'), 10)
+	project_paginator = Paginator(Project.objects.order_by('-pub_date'), 10)
+
+	try:
+		goals = goal_paginator.page(pages["goal_page"])
+		requirements = requirement_paginator.page(pages["requirement_page"])
+		projects = project_paginator.page(pages["project_page"])
+	except PageNotAnInteger:
+		goals = goal_paginator.page(1)
+		requirements = requirement_paginator.page(1)
+		projects = project_paginator.page(1)
+	except EmptyPage:
+		goals = goal_paginator.page(goal_paginator.num_pages)
+		requirements = requirement_paginator.page(requirement_paginator.num_pages)
+		projects = project_paginator.page(project_paginator.num_pages)
+
+	context = {'goals': goals,  
+	'requirements': requirements, 
+	'projects': projects,
 	'error_message': error_message}
 	return render(request, 'stokosm/index.html', context)
 
@@ -62,7 +85,7 @@ def detail(request, node_type, node_id):
 		else:
 			connections_form = RequirementConnectionForm()
 			linked_projects_form = ProjectLinkForm()
-			context = {'node': goal, 
+			context = {'node': requirement, 
 			'node_type': node_type, 
 			'connections_form': connections_form, 
 			'linked_projects_form': linked_projects_form}
@@ -170,7 +193,7 @@ def edit_connection(request, connection_id):
 	connection_initial = {'name': connection.name, 
 	'directed': connection.directed, 
 	'direction': connection.direction,
-	'description': node.description}
+	'description': connection.description}
 	if connection.goal1:
 		connection_initial['goal1']=connection.goal1
 		connection_initial['goal2']=connection.goal2
@@ -216,7 +239,7 @@ def edit_link(request, link_id):
 	link = get_object_or_404(Link, pk=link_id)
 	link_initial = {'name': link.name, 
 	'project': link.project,
-	'description': node.description}
+	'description': link.description}
 	if link.goal:
 		link_initial['goal'] = link.goal
 		if request.method == 'POST':

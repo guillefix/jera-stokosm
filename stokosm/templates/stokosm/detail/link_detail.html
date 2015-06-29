@@ -15,10 +15,10 @@
 
 {% if link.goal %}
 
-	<p>{{ link.project }}--{{ link.goal }}</p>
+	<p><a href="{% url 'stokosm:detail' node_type='project' node_id=link.project.id %}">{{ link.project }}</a>--<a href="{% url 'stokosm:detail' node_type='goal' node_id=link.goal.id %}">{{ link.goal }}</a></p>
 
 {% elif link.requirement %}
-	<p>{{ link.project }}--{{ link.requirement }}</p>
+	<p><a href="{% url 'stokosm:detail' node_type='project' node_id=link.project.id %}">{{ link.project }}</a>--<a href="{% url 'stokosm:detail' node_type='requirement' node_id=link.requirement.id %}">{{ link.requirement }}</a></p>
 
 
 {% endif %}

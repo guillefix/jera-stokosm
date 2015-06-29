@@ -59,7 +59,7 @@ h4#add_linked_requirement {
 
 
 
-/*.node {
+.node {
   stroke: #fff;
   stroke-width: 1.5px;
 }
@@ -67,4 +67,4 @@ h4#add_linked_requirement {
 .link {
   stroke: #999;
   stroke-opacity: .6;
-}*/
+}

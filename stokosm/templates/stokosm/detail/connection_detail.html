@@ -17,13 +17,13 @@
 
 {% if connection.goal1 %}
 
-	<p>{{ connection.goal1 }}<span id="connection_type"></span>{{ connection.goal2 }}</p>
+	<p><a href="{% url 'stokosm:detail' node_type='goal' node_id=connection.goal1.id %}">{{ connection.goal1 }}</a><span id="connection_type"></span><a href="{% url 'stokosm:detail' node_type='goal' node_id=connection.goal2.id %}">{{ connection.goal2 }}</a></p>
 
 {% elif connection.requirement1 %}
-	<p>{{ connection.requirement1 }}<span id="connection_type"></span>{{ connection.requirement2 }}</p>
+	<p><a href="{% url 'stokosm:detail' node_type='requirement' node_id=connection.requirement1.id %}">{{ connection.requirement1 }}</a><span id="connection_type"></span><a href="{% url 'stokosm:detail' node_type='requirement' node_id=connection.requirement2.id %}">{{ connection.requirement2 }}</a></p>
 
 {% elif connection.project1 %}
-	<p>{{ connection.project1 }}<span id="connection_type"></span>{{ connection.project2 }}</p>
+	<p><a href="{% url 'stokosm:detail' node_type='project' node_id=connection.project1.id %}">{{ connection.project1 }}</a><span id="connection_type"></span><a href="{% url 'stokosm:detail' node_type='project' node_id=connection.project2.id %}">{{ connection.project2 }}</a></p>
 
 {% endif %}
 

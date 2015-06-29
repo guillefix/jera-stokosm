@@ -40,11 +40,7 @@ input[name="add_linked_project"],
 input[name="add_connected_requirement"], 
 input[name="add_connected_project"], 
 input[name="add_linked_goal"], 
-input[name="add_linked_requirement"], 
-input[name="create_node"], 
-input[name="edit_node"], 
-input[name="edit_connection"], 
-input[name="edit_link"]{
+input[name="add_linked_requirement"] {
 	display: block;
 }
 
@@ -56,15 +52,3 @@ h4#add_linked_goal,
 h4#add_linked_requirement {
 	cursor: pointer;
 }
-
-
-
-/*.node {
-  stroke: #fff;
-  stroke-width: 1.5px;
-}
-
-.link {
-  stroke: #999;
-  stroke-opacity: .6;
-}*/

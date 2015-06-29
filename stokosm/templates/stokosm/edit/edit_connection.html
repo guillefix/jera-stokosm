@@ -9,7 +9,7 @@
 <form action="{% url 'stokosm:edit_connection' connection_id=connection.id %}" method="post">
 {% csrf_token %}
 {{ form }}
-<input type="submit" value="Submit" />
+<input type="submit" value="Submit" name="edit_connection" />
 
 </form>
 

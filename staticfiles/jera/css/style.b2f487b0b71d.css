@@ -1,0 +1,38 @@
+#header {
+	background-color: #99CC99;
+	color: #101010;
+}
+
+#header h1 {
+	margin-top: 0;
+}
+
+#header a {
+	margin-top: 0;
+}
+
+select#id_direction {
+	width: 70px;
+	position: relative;
+	top: 3px;
+}
+
+label[for="id_directed"], input#id_directed, label[for="id_direction"] {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+input#id_directed {
+	margin-right: 5px;
+	position: relative;
+	bottom: 3px;
+
+}
+
+select#id_goal2 {
+	display: block;
+}
+
+input[name="add_connected_goal"] {
+	display: block;
+}

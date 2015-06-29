@@ -35,10 +35,73 @@
 </div>
 
 <script type="text/javascript">
-//var br = document.createElement("br");
-//var form = document.getElementById("detail_form");
-//var field = document.querySelector("label[for="+"id_description"+"]");
-//form.insertBefore(br, field);
+if (document.getElementById("connected_goal_form")) {
+	var form = document.getElementById("connected_goal_form");
+	form.setAttribute("style", "display: none;");
+	add_connected_goal = document.getElementById("add_connected_goal");
+	add_connected_goal.onclick = function() {
+		var form = document.getElementById("connected_goal_form");
+		form.getAttribute("style") == "display: initial;" ? 
+		form.setAttribute("style", "display: none;") :
+		form.setAttribute("style", "display: initial;")
+	};
+}
+
+if (document.getElementById("connected_requirement_form")) {
+	var form = document.getElementById("connected_requirement_form");
+	form.setAttribute("style", "display: none;");
+	add_connected_requirement = document.getElementById("add_connected_requirement");
+	add_connected_requirement.onclick = function() {
+		var form = document.getElementById("connected_requirement_form");
+		form.getAttribute("style") == "display: initial;" ? 
+		form.setAttribute("style", "display: none;") :
+		form.setAttribute("style", "display: initial;")	};
+}
+
+if (document.getElementById("connected_project_form")) {
+	var form = document.getElementById("connected_project_form");
+	form.setAttribute("style", "display: none;");
+	add_connected_project = document.getElementById("add_connected_project");
+	add_connected_project.onclick = function() {
+		var form = document.getElementById("connected_project_form");
+		form.getAttribute("style") == "display: initial;" ? 
+		form.setAttribute("style", "display: none;") :
+		form.setAttribute("style", "display: initial;")	};
+}
+
+if (document.getElementById("linked_project_form")) {
+	var form = document.getElementById("linked_project_form");
+	form.setAttribute("style", "display: none;");
+	add_linked_project = document.getElementById("add_linked_project");
+	add_linked_project.onclick = function() {
+		var form = document.getElementById("linked_project_form");
+		form.getAttribute("style") == "display: initial;" ? 
+		form.setAttribute("style", "display: none;") :
+		form.setAttribute("style", "display: initial;")	};
+}
+
+if (document.getElementById("linked_goal_form")) {
+	var form = document.getElementById("linked_goal_form");
+	form.setAttribute("style", "display: none;");
+	add_linked_goal = document.getElementById("add_linked_goal");
+	add_linked_goal.onclick = function() {
+		var form = document.getElementById("linked_goal_form");
+		form.getAttribute("style") == "display: initial;" ? 
+		form.setAttribute("style", "display: none;") :
+		form.setAttribute("style", "display: initial;")	};
+}
+
+if (document.getElementById("linked_requirement_form")) {
+	var form = document.getElementById("linked_requirement_form");
+	form.setAttribute("style", "display: none;");
+	add_linked_requirement = document.getElementById("add_linked_requirement");
+	add_linked_requirement.onclick = function() {
+		var form = document.getElementById("linked_requirement_form");
+		form.getAttribute("style") == "display: initial;" ? 
+		form.setAttribute("style", "display: none;") :
+		form.setAttribute("style", "display: initial;")	};
+}
+
 </script>
 
 {% endblock %}

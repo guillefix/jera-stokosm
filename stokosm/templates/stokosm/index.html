@@ -5,15 +5,29 @@
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <div class="row-fluid">
+	<div class="span1">
+		<a>List view</a>
+	</div>
+	<div class="span1">
+		<a>Graph view</a>
+	</div>
+	<div class="span10">
+	</div>
+</div>
+
+<div class="row-fluid" id="graph_view">
+</div>
+
+<div class="row-fluid" id="list_view">
 	<div class="span4" id="latest_goals">
 		<h2 class="text-center">Latest Goals</h2>
 		<h4 class="text-center"><a href="{% url 'stokosm:create' node_type='goal' %}">Create new goal</a></h3>
 		<div class="row-fluid">
 			<div class="span3"></div>
 			<div class="span6">				
-				{% if latest_goal_list%}
+				{% if goals %}
 					<ul>
-					{% for goal in latest_goal_list %}
+					{% for goal in goals %}
 						<li><a href="{% url 'stokosm:detail' node_type='goal' node_id=goal.id %}">{{ goal.name }}</a></li>
 						{% endfor %}
 					</ul>
@@ -23,6 +37,15 @@
 			</div>
 			<div class="span3"></div>
 		</div>
+		<div class="row-fluid">
+			{% if goals.has_previous %}
+			<a href="{% url 'stokosm:index' %}?goal_page={{ goals.previous_page_number }}">Previous</a>
+			{% endif %}
+
+			{% if goals.has_next %}
+			<a href="{% url 'stokosm:index' %}?goal_page={{ goals.next_page_number }}">Next</a>
+			{% endif %}
+		</div>
 	</div>
 
 	<div class="span4" id="latest_requirement">
@@ -31,9 +54,9 @@
 		<div class="row-fluid">
 			<div class="span3"></div>
 			<div class="span6">				
-				{% if latest_requirement_list%}
+				{% if requirements%}
 					<ul>
-					{% for requirement in latest_requirement_list %}
+					{% for requirement in requirements %}
 						<li><a href="{% url 'stokosm:detail' node_type='requirement' node_id=requirement.id %}">{{ requirement.name }}</a></li>
 						{% endfor %}
 					</ul>
@@ -43,6 +66,15 @@
 			</div>
 			<div class="span3"></div>
 		</div>
+		<div class="row-fluid">
+			{% if requirements.has_previous %}
+			<a href="{% url 'stokosm:index' %}?goal_page={{ requirements.previous_page_number }}">Previous</a>
+			{% endif %}
+
+			{% if requirements.has_next %}
+			<a href="{% url 'stokosm:index' %}?goal_page={{ requirements.next_page_number }}">Next</a>
+			{% endif %}
+		</div>
 	</div>
 
 	<div class="span4" id="latest_goals">
@@ -51,9 +83,9 @@
 		<div class="row-fluid">
 			<div class="span3"></div>
 			<div class="span6">
-				{% if latest_project_list%}
+				{% if projects%}
 					<ul>
-					{% for project in latest_project_list %}
+					{% for project in projects %}
 						<li><a href="{% url 'stokosm:detail' node_type='project' node_id=project.id %}">{{ project.name }}</a></li>
 						{% endfor %}
 					</ul>
@@ -62,8 +94,154 @@
 				{% endif %}
 			</div>
 			<div class="span3"></div>
+		<div class="row-fluid">
+			{% if projects.has_previous %}
+			<a href="{% url 'stokosm:index' %}?goal_page={{ projects.previous_page_number }}">Previous</a>
+			{% endif %}
+
+			{% if projects.has_next %}
+			<a href="{% url 'stokosm:index' %}?goal_page={{ projects.next_page_number }}">Next</a>
+			{% endif %}
+		</div>
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+
+var width = 960,
+    height = 500;
+
+var color = d3.scale.category20();
+
+var force = d3.layout.force()
+    .charge(-120)
+    .linkDistance(30)
+    .size([width, height]);
+
+var svg = d3.select("#graph_view").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+//d3.json("miserables.json", function(error, graph) {
+//  if (error) throw error;
+
+nodes = [];
+
+name_index = {};
+
+//GOALS
+
+{% for goal in goals %}
+
+	name_index["{{goal.name}}"] = nodes.push({"name": "{{ goal.name }}", "node_type": 1, "ranking": 1})-1;
+
+{% endfor %}
+
+connections = []
+
+{% for goal in goals %}
+
+	{% for connection in goal.connections.all %}
+
+		connections.push({"source": nodes[name_index["{{connection.goal1.name}}"]], "target": nodes[name_index["{{connection.goal2.name}}"]], "ranking":1, "link_type": 1 });
+
+	{% endfor %}
+
+{% endfor %}
+
+//REQUIREMENTS
+
+{% for requirement in requirements %}
+
+	name_index["{{requirement.name}}"] = nodes.push({"name": "{{ requirement.name }}", "node_type": 2, "ranking": 1 })-1;
+
+{% endfor %}
+
+{% for requirement in requirements %}
+
+	{% for connection in requirement.connections.all %}
+
+		connections.push({"source": nodes[name_index["{{connection.requirement1.name}}"]], "target": nodes[name_index["{{connection.requirement2.name}}"]], "ranking":1, "link_type": 1 });
+
+	{% endfor %}
+
+{% endfor %}
+
+//PROJECTS
+
+{% for project in projects %}
+
+	name_index["{{project.name}}"] = nodes.push({"name": "{{ project.name }}", "node_type": 3, "ranking": 1 })-1;
+
+{% endfor %}
+
+{% for project in projects %}
+
+	{% for connection in project.connections.all %}
+
+		connections.push({"source": nodes[name_index["{{connection.project1.name}}"]], "target": nodes[name_index["{{connection.project2.name}}"]], "ranking": 1 , "link_type": 1});
+
+	{% endfor %}
+
+	{% for link in project.links.all %}
+		{% if link.goal %}
+			connections.push({"source": nodes[name_index["{{link.project.name}}"]], "target": nodes[name_index["{{link.goal.name}}"]], "ranking": 1 , "link_type": 2});
+		{% elif link.requirement %}
+			connections.push({"source": nodes[name_index["{{link.project.name}}"]], "target": nodes[name_index["{{link.requirement.name}}"]], "ranking": 1 , "link_type": 2});
+		{% endif %}
+	{% endfor %}
+
+{% endfor %}
+
+//LINKS
+
+  force
+      .nodes(nodes)
+      .links(connections)
+      .gravity(0.1)
+      .charge(-1000)
+      .size([width, height])
+      .start();
+
+  var connection = svg.selectAll(".connection")
+      .data(connections)
+    .enter().append("line")
+      .attr("class", "connection")
+      .attr("stroke-width", function(d) { return Math.sqrt(d.ranking); })
+      .attr("stroke", function (d) {
+      	if (d.link_type == 1) {return "#999";}
+      	else {return "#939";}
+      });
+
+  var node = svg.selectAll("circle.node")
+    .data(nodes)
+    .enter().append("g")
+   	.attr("class", "node")
+    .call(force.drag);
+
+    node.append("circle")
+      .attr("r", function(d) { return 5*d.ranking})
+      .attr("fill", function(d) { return color(d.node_type); })
+
+  node.append("text")
+      .text(function(d, i) { return d.name; })
+      .attr("fill", "#555")
+      .attr("font-family", "Arial")
+      .attr("font-size", 12)
+      .attr("x", 7)
+      .attr("y", 2)
+      ;
+
+  force.on("tick", function() {
+    connection.attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+
+    node.attr("transform", function(d, i) { return "translate("+d.x+", "+d.y+")"; });
+  });
+
+</script>
 
 {% endblock %}

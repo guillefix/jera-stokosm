@@ -56,15 +56,3 @@ h4#add_linked_goal,
 h4#add_linked_requirement {
 	cursor: pointer;
 }
-
-
-
-/*.node {
-  stroke: #fff;
-  stroke-width: 1.5px;
-}
-
-.link {
-  stroke: #999;
-  stroke-opacity: .6;
-}*/

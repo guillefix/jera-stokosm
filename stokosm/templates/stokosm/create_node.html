@@ -7,7 +7,7 @@
 <form action="{% url 'stokosm:create' node_type=node_type %}" method="post">
 {% csrf_token %}
 {{ form }}
-<input type="submit" value="Submit" />
+<input type="submit" value="Submit" name="create_node" />
 
 </form>
 

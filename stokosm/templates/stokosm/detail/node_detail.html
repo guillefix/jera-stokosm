@@ -16,30 +16,30 @@
 
 	<div class="span6">
 		<h3>Related goals</h3>
-		<h4>Add related {{ node_type }}</h4>
-		<form id="detail_form" action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
+		<a><h4 id="add_connected_goal">Add related {{ node_type }}</h4></a>
+		<form id="connected_goal_form" action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
 		{% csrf_token %}
 		{{ connections_form }}
 		<input type="submit" name="add_connected_goal" value="Submit" />
 		</form>
 		<ul>
 		{% for connection in node.goal.connections.all %}
-			<li><a href="{% url 'stokosm:connection_detail' connection_id=connection.id %}">{{ connection.goal2.name }}</a></li>
+			<li><a href="{% url 'stokosm:detail' node_type='goal' node_id=connection.goal2.id %}">{{ connection.goal2.name }}</a> - <a href="{% url 'stokosm:connection_detail' connection_id=connection.id %}">See connection</a></li>
 		{% endfor %}
 		</ul>
 	</div>
 
 	<div class="span6">
 		<h3>Linked projects</h3>
-		<h4>Add linked project</h4>
-		<form action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
+		<a><h4 id="add_linked_project">Add linked project</h4></a>
+		<form id="linked_project_form" action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
 		{% csrf_token %}
 		{{ linked_projects_form }}
 		<input type="submit" name="add_linked_project" value="Submit" />
 		</form>
 		<ul>
 		{% for link in node.goal.links.all %}
-			<li><a href="{% url 'stokosm:link_detail' link_id=link.id %}">{{ link.project.name }}</a></li>
+			<li><a href="{% url 'stokosm:detail' node_type='project' node_id=link.project.id %}">{{ link.project.name }}</a> - <a href="{% url 'stokosm:link_detail' link_id=link.id %}">See link</a></li>
 		{% endfor %}
 		</ul>
 	</div>
@@ -48,30 +48,30 @@
 <!--REQUIREMENT-->
 	<div class="span6">
 		<h3>Related requirements</h3>
-		<h4>Add related {{ node_type }}</h4>
-		<form action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
+		<a><h4 id="add_connected_requirement">Add related {{ node_type }}</h4></a>
+		<form id="connected_requirement_form" action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
 		{% csrf_token %}
 		{{ connections_form }}
 		<input type="submit" value="Submit" />	
 		</form>
 		<ul>
 		{% for connection in node.requirement.connections.all %}
-			<li><a href="{% url 'stokosm:connection_detail' connection_id=connection.id %}">{{ connection.requirement2.name }}</a></li>
+			<li><a href="{% url 'stokosm:detail' node_type='requirement' node_id=connection.requirement2.id %}">{{ connection.requirement2.name }}</a> - <a href="{% url 'stokosm:connection_detail' connection_id=connection.id %}">See connection</a></li>
 		{% endfor %}
 		</ul>
 	</div>	
 
 	<div class="span6">
 		<h3>Linked projects</h3>
-		<h4>Add linked project</h4>
-		<form action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
+		<a><h4 id="add_linked_project">Add linked project</h4></a>
+		<form id="linked_project_form" action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
 		{% csrf_token %}
 		{{ linked_projects_form }}
 		<input type="submit" name="add_linked_project" value="Submit" />	
 		</form>
 		<ul>
 		{% for link in node.requirement.links.all %}
-			<li><a href="{% url 'stokosm:link_detail' link_id=link.id %}">{{ link.project.name }}</a></li>
+			<li><a href="{% url 'stokosm:detail' node_type='project' node_id=link.project.id %}">{{ link.project.name }}</a> - <a href="{% url 'stokosm:link_detail' link_id=link.id %}">See link</a></li>
 		{% endfor %}
 		</ul>
 	</div>
@@ -80,45 +80,49 @@
 <!--PROJECT-->
 	<div class="span6">
 		<h3>Related projects</h3>
-		<h4>Add related {{ node_type }}</h4>
-		<form action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
+		<a><h4 id="add_connected_project">Add related {{ node_type }}</h4></a>
+		<form id="connected_project_form" action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
 		{% csrf_token %}
 		{{ connections_form }}
 		<input type="submit" name="add_connected_project" value="Submit" />	
 		</form>
 		<ul>
 		{% for connection in node.project.connections.all %}
-			<li><a href="{% url 'stokosm:connection_detail' connection_id=connection.id %}">{{ connection.project2.name }}</a></li>
+			<li><a href="{% url 'stokosm:detail' node_type='project' node_id=connection.project2.id %}">{{ connection.project2.name }}</a> - <a href="{% url 'stokosm:connection_detail' connection_id=connection.id %}">See connection</a></li>
 		{% endfor %}
 		</ul>
 	</div>
 
 	<div class="span3">
 		<h3>Linked goals</h3>
-		<h4>Add linked goal</h4>
-		<form action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
+		<a><h4 id="add_linked_goal">Add linked goal</h4></a>
+		<form id="linked_goal_form" action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
 		{% csrf_token %}
 		{{ linked_goals_form }}
 		<input type="submit" name="add_linked_goal" value="Submit" />	
 		</form>
 		<ul>
 		{% for link in node.project.links.all %}
-			<li><a href="{% url 'stokosm:link_detail' link_id=link.id %}">{{ link.goal.name }}</a></li>
+			{% if link.goal %}
+			<li><a href="{% url 'stokosm:detail' node_type='goal' node_id=link.goal.id %}">{{ link.goal.name }}</a> - <a href="{% url 'stokosm:link_detail' link_id=link.id %}">See link</a></li>
+			{% endif %}
 		{% endfor %}
 		</ul>
 	</div>
 
 	<div class="span3">
 		<h3>Linked requirements</h3>
-		<h4>Add linked requirement</h4>
-		<form action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
+		<a><h4 id="add_linked_requirement">Add linked requirement</h4></a>
+		<form id="linked_requirement_form" action="{% url 'stokosm:detail' node_id=node.id node_type=node_type %}" method="post">
 		{% csrf_token %}
 		{{ linked_requirements_form }}
 		<input type="submit" name="add_linked_requirement" value="Submit" />
 		</form>
 		<ul>
 		{% for link in node.project.links.all %}
-			<li><a href="{% url 'stokosm:link_detail' link_id=link.id %}">{{ link.requirement.name }}</a></li>
+			{% if link.requirement %}
+			<li><a href="{% url 'stokosm:detail' node_type='requirement' node_id=link.requirement.id %}">{{ link.requirement.name }}</a> - <a href="{% url 'stokosm:link_detail' link_id=link.id %}">See link</a></li>
+			{% endif %}
 		{% endfor %}
 		</ul>
 	</div>

@@ -11,6 +11,60 @@
 	margin-top: 0;
 }
 
-#id_direction {
+select#id_direction {
 	width: 70px;
+	position: relative;
+	top: 3px;
 }
+
+label[for="id_directed"], 
+input#id_directed, 
+label[for="id_direction"] {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+input#id_directed {
+	margin-right: 5px;
+	position: relative;
+	bottom: 3px;
+
+}
+
+select#id_goal2, select#id_requirement2, select#id_project2 {
+	display: block;
+}
+
+input[name="add_connected_goal"], 
+input[name="add_linked_project"], 
+input[name="add_connected_requirement"], 
+input[name="add_connected_project"], 
+input[name="add_linked_goal"], 
+input[name="add_linked_requirement"], 
+input[name="create_node"], 
+input[name="edit_node"], 
+input[name="edit_connection"], 
+input[name="edit_link"]{
+	display: block;
+}
+
+h4#add_connected_goal, 
+h4#add_linked_project, 
+h4#add_connected_requirement, 
+h4#add_connected_project, 
+h4#add_linked_goal, 
+h4#add_linked_requirement {
+	cursor: pointer;
+}
+
+
+
+/*.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}*/
