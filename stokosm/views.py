@@ -17,6 +17,8 @@ def index(request, error_message=""):
 	if "project_page" in request.GET:
 		pages["project_page"] = request.GET.get("project_page")
 
+	
+
 	goal_paginator = Paginator(Goal.objects.order_by('-pub_date'), 10)
 	requirement_paginator = Paginator(Requirement.objects.order_by('-pub_date'), 10)
 	project_paginator = Paginator(Project.objects.order_by('-pub_date'), 10)
@@ -33,9 +35,36 @@ def index(request, error_message=""):
 		goals = goal_paginator.page(goal_paginator.num_pages)
 		requirements = requirement_paginator.page(requirement_paginator.num_pages)
 		projects = project_paginator.page(project_paginator.num_pages)
+	for goal in goals:
+		if request.method == 'POST' and ( str(goal.id)+"_vote" in request.POST):
+			vote = request.POST.get(str(goal.id)+"_vote")
+			if vote == "upvote":
+				goal.ranking+=1
+				goal.save()
+			elif vote == "downvote":
+				goal.ranking-=1
+				goal.save()
+	for requirement in requirements:
+		if request.method == 'POST' and ( str(requirement.id)+"_vote" in request.POST):
+			vote = request.POST.get(str(requirement.id)+"_vote")
+			if vote == "upvote":
+				requirement.ranking+=1
+				requirement.save()
+			elif vote == "downvote":
+				requirement.ranking-=1
+				requirement.save()
+	for project in projects:
+		if request.method == 'POST' and ( str(project.id)+"_vote" in request.POST):
+			vote = request.POST.get(str(project.id)+"_vote")
+			if vote == "upvote":
+				project.ranking+=1
+				project.save()
+			elif vote == "downvote":
+				project.ranking-=1
+				project.save()
 
-	context = {'goals': goals,  
-	'requirements': requirements, 
+	context = {'goals': goals,
+	'requirements': requirements,
 	'projects': projects,
 	'error_message': error_message}
 	return render(request, 'stokosm/index.html', context)

@@ -12,6 +12,7 @@ class GeneralContent(models.Model):
 class Node(GeneralContent):
   related = models.ManyToManyField("self", through='Connection', symmetrical=False, related_name='reverse_related')
   description = models.CharField(max_length=2000, blank=True)
+  ranking = models.IntegerField(default=0)
 
 class Goal(Node):
   pass
@@ -38,9 +39,11 @@ class Connection(GeneralContent):
   )
   direction = models.IntegerField(default=0, choices=DIRECTION_CHOICES)
   directed = models.BooleanField(default=False)
+  ranking = models.IntegerField(default=0)
 
 class Link(GeneralContent):
   description = models.CharField(max_length=2000, blank=True)
   goal = models.ForeignKey(Goal, related_name="links", null=True, blank=True)
   requirement = models.ForeignKey(Requirement, related_name="links", null=True, blank=True)
   project = models.ForeignKey(Project, related_name="links")
+  ranking = models.IntegerField(default=0)

@@ -28,7 +28,20 @@
 				{% if goals %}
 					<ul>
 					{% for goal in goals %}
-						<li><a href="{% url 'stokosm:detail' node_type='goal' node_id=goal.id %}">{{ goal.name }}</a></li>
+						<li class="listed_node">
+						<div class="vote">
+						<form method="POST" action="{% url 'stokosm:index' %}" id="{{ goal.id }}_vote_form">
+						<input type="hidden" name="{{ goal.id }}_vote" id="{{ goal.id }}_vote">
+							{% csrf_token %} 
+							<i class="icon-chevron-up" onclick="document.getElementById('{{ goal.id }}_vote').value='upvote'; document.getElementById('{{ goal.id }}_vote_form').submit();"></i>
+							<br>
+							<span class="ranking">{{ goal.ranking }}</span>
+							<br>
+							<i class="icon-chevron-down" onclick="document.getElementById('{{ goal.id }}_vote').value='downvote'; document.getElementById('{{ goal.id }}_vote_form').submit();"></i>
+						</form>
+						</div>
+							<a href="{% url 'stokosm:detail' node_type='goal' node_id=goal.id %}">{{ goal.name }}</a>
+						</li>
 						{% endfor %}
 					</ul>
 				{% else %}
@@ -57,7 +70,20 @@
 				{% if requirements%}
 					<ul>
 					{% for requirement in requirements %}
-						<li><a href="{% url 'stokosm:detail' node_type='requirement' node_id=requirement.id %}">{{ requirement.name }}</a></li>
+						<li>
+						<li class="listed_node">
+						<div class="vote">
+						<form method="POST" action="{% url 'stokosm:index' %}" id="{{ requirement.id }}_vote_form">
+						<input type="hidden" name="{{ requirement.id }}_vote" id="{{ requirement.id }}_vote">
+							{% csrf_token %} 
+							<i class="icon-chevron-up" onclick="document.getElementById('{{ requirement.id }}_vote').value='upvote'; document.getElementById('{{ requirement.id }}_vote_form').submit();"></i>
+							<br>
+							<span class="ranking">{{ requirement.ranking }}</span>
+							<br>
+							<i class="icon-chevron-down" onclick="document.getElementById('{{ requirement.id }}_vote').value='downvote'; document.getElementById('{{ requirement.id }}_vote_form').submit();"></i>
+						</form>
+						</div>
+						<a href="{% url 'stokosm:detail' node_type='requirement' node_id=requirement.id %}">{{ requirement.name }}</a></li>
 						{% endfor %}
 					</ul>
 				{% else %}
@@ -86,7 +112,21 @@
 				{% if projects%}
 					<ul>
 					{% for project in projects %}
-						<li><a href="{% url 'stokosm:detail' node_type='project' node_id=project.id %}">{{ project.name }}</a></li>
+						<li>
+						<li class="listed_node">
+						<div class="vote">
+						<form method="POST" action="{% url 'stokosm:index' %}" id="{{ project.id }}_vote_form">
+						<input type="hidden" name="{{ project.id }}_vote" id="{{ project.id }}_vote">
+							{% csrf_token %} 
+							<i class="icon-chevron-up" onclick="document.getElementById('{{ project.id }}_vote').value='upvote'; document.getElementById('{{ project.id }}_vote_form').submit();"></i>
+							<br>
+							<span class="ranking">{{ project.ranking }}</span>
+							<br>
+							<i class="icon-chevron-down" onclick="document.getElementById('{{ project.id }}_vote').value='downvote'; document.getElementById('{{ project.id }}_vote_form').submit();"></i>
+						</form>
+						</div>
+						<div>
+						<a href="{% url 'stokosm:detail' node_type='project' node_id=project.id %}">{{ project.name }}</a></li>
 						{% endfor %}
 					</ul>
 				{% else %}
@@ -106,6 +146,13 @@
 		</div>
 	</div>
 </div>
+
+<div class="row-fluid" id="filters">
+<div class="span4"></div>
+<div class="span4"></div>
+<div class="span4"></div>
+</div>
+
 
 <script type="text/javascript">
 
@@ -134,7 +181,7 @@ name_index = {};
 
 {% for goal in goals %}
 
-	name_index["{{goal.name}}"] = nodes.push({"name": "{{ goal.name }}", "node_type": 1, "ranking": 1})-1;
+	name_index["{{goal.name}}"] = nodes.push({"name": "{{ goal.name }}", "node_type": 1, "ranking": {{ goal.ranking }}})-1;
 
 {% endfor %}
 
@@ -144,7 +191,7 @@ connections = []
 
 	{% for connection in goal.connections.all %}
 
-		connections.push({"source": nodes[name_index["{{connection.goal1.name}}"]], "target": nodes[name_index["{{connection.goal2.name}}"]], "ranking":1, "link_type": 1 });
+		connections.push({"source": nodes[name_index["{{connection.goal1.name}}"]], "target": nodes[name_index["{{connection.goal2.name}}"]], "ranking":{{ connection.ranking }}, "link_type": 1 });
 
 	{% endfor %}
 
@@ -154,7 +201,7 @@ connections = []
 
 {% for requirement in requirements %}
 
-	name_index["{{requirement.name}}"] = nodes.push({"name": "{{ requirement.name }}", "node_type": 2, "ranking": 1 })-1;
+	name_index["{{requirement.name}}"] = nodes.push({"name": "{{ requirement.name }}", "node_type": 2, "ranking": {{ requirement.ranking }} })-1;
 
 {% endfor %}
 
@@ -162,7 +209,7 @@ connections = []
 
 	{% for connection in requirement.connections.all %}
 
-		connections.push({"source": nodes[name_index["{{connection.requirement1.name}}"]], "target": nodes[name_index["{{connection.requirement2.name}}"]], "ranking":1, "link_type": 1 });
+		connections.push({"source": nodes[name_index["{{connection.requirement1.name}}"]], "target": nodes[name_index["{{connection.requirement2.name}}"]], "ranking":{{ connection.ranking }}, "link_type": 1 });
 
 	{% endfor %}
 
@@ -172,7 +219,7 @@ connections = []
 
 {% for project in projects %}
 
-	name_index["{{project.name}}"] = nodes.push({"name": "{{ project.name }}", "node_type": 3, "ranking": 1 })-1;
+	name_index["{{project.name}}"] = nodes.push({"name": "{{ project.name }}", "node_type": 3, "ranking": {{ project.ranking }} })-1;
 
 {% endfor %}
 
@@ -180,15 +227,15 @@ connections = []
 
 	{% for connection in project.connections.all %}
 
-		connections.push({"source": nodes[name_index["{{connection.project1.name}}"]], "target": nodes[name_index["{{connection.project2.name}}"]], "ranking": 1 , "link_type": 1});
+		connections.push({"source": nodes[name_index["{{connection.project1.name}}"]], "target": nodes[name_index["{{connection.project2.name}}"]], "ranking": {{ connection.ranking }} , "link_type": 1});
 
 	{% endfor %}
 
 	{% for link in project.links.all %}
 		{% if link.goal %}
-			connections.push({"source": nodes[name_index["{{link.project.name}}"]], "target": nodes[name_index["{{link.goal.name}}"]], "ranking": 1 , "link_type": 2});
+			connections.push({"source": nodes[name_index["{{link.project.name}}"]], "target": nodes[name_index["{{link.goal.name}}"]], "ranking": {{ link.ranking }} , "link_type": 2});
 		{% elif link.requirement %}
-			connections.push({"source": nodes[name_index["{{link.project.name}}"]], "target": nodes[name_index["{{link.requirement.name}}"]], "ranking": 1 , "link_type": 2});
+			connections.push({"source": nodes[name_index["{{link.project.name}}"]], "target": nodes[name_index["{{link.requirement.name}}"]], "ranking": {{ link.ranking }} , "link_type": 2});
 		{% endif %}
 	{% endfor %}
 
@@ -208,7 +255,7 @@ connections = []
       .data(connections)
     .enter().append("line")
       .attr("class", "connection")
-      .attr("stroke-width", function(d) { return Math.sqrt(d.ranking); })
+      .attr("stroke-width", function(d) { return Math.sqrt(d.ranking)+1; })
       .attr("stroke", function (d) {
       	if (d.link_type == 1) {return "#999";}
       	else {return "#939";}
@@ -220,18 +267,17 @@ connections = []
    	.attr("class", "node")
     .call(force.drag);
 
-    node.append("circle")
-      .attr("r", function(d) { return 5*d.ranking})
-      .attr("fill", function(d) { return color(d.node_type); })
+	node.append("circle")
+		.attr("r", function(d) { return d.ranking+5})
+		.attr("fill", function(d) { return color(d.node_type); })
 
-  node.append("text")
-      .text(function(d, i) { return d.name; })
-      .attr("fill", "#555")
-      .attr("font-family", "Arial")
-      .attr("font-size", 12)
-      .attr("x", 7)
-      .attr("y", 2)
-      ;
+	node.append("text")
+		.text(function(d, i) { return d.name; })
+		.attr("fill", "#555")
+		.attr("font-family", "Arial")
+		.attr("font-size", 12)
+		.attr("x", 7)
+		.attr("y", 2);
 
   force.on("tick", function() {
     connection.attr("x1", function(d) { return d.source.x; })

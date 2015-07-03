@@ -61,16 +61,11 @@ ul {
     list-style-type: none;
 }
 li.listed_node {
-	line-height: 40px;
+	line-height: 30px;
 }
 
 .vote {
 	float: left;
 	height: 20px;
 	line-height: 10px;
-}
-
-.ranking {
-	position: relative;
-	left: 2px;
 }

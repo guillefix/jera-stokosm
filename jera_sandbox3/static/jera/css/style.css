@@ -57,14 +57,20 @@ h4#add_linked_requirement {
 	cursor: pointer;
 }
 
-
-
-/*.node {
-  stroke: #fff;
-  stroke-width: 1.5px;
+ul {
+    list-style-type: none;
+}
+li.listed_node {
+	line-height: 40px;
 }
 
-.link {
-  stroke: #999;
-  stroke-opacity: .6;
-}*/
+.vote {
+	float: left;
+	height: 20px;
+	line-height: 10px;
+}
+
+.ranking {
+	position: relative;
+	left: 2px;
+}

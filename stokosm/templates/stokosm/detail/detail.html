@@ -24,7 +24,16 @@
 </div>
 
 <div class="row-fluid">
-	<p>{{ node.description }}</p>
+	{% if node %}
+	<p><b>Description</b>: {{ node.description }}</p>
+	<p><b>Ranking</b>: {{ node.ranking }}</p>
+	{% elif connection %}
+	<p><b>Description</b>: {{ connection.description }}</p>
+	<p><b>Ranking</b>: {{ connection.ranking }}</p>
+	{% elif link %}
+	<p><b>Description</b>: {{ link.description }}</p>
+	<p><b>Ranking</b>: {{ link.ranking }}</p>
+	{% endif %}
 </div>
 
 <div class="row-fluid">
