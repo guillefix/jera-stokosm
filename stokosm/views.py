@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
+#from django.db.transaction import set_autocommit
 #from django.template import	RequestContext, loader
 
 from .models import Node, Goal, Requirement, Project, Connection, Link
@@ -17,7 +18,7 @@ def index(request, error_message=""):
 	if "project_page" in request.GET:
 		pages["project_page"] = request.GET.get("project_page")
 
-	
+
 
 	goal_paginator = Paginator(Goal.objects.order_by('-pub_date'), 10)
 	requirement_paginator = Paginator(Requirement.objects.order_by('-pub_date'), 10)

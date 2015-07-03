@@ -60,7 +60,7 @@ class LinkForm(DescriptionForm):
 	def save(self, context, force_insert=False, force_update=False, commit=True):
 		instance = super(LinkForm, self).save(commit=False)
 		for node in context:
-			instance[node] = context[node]
+			setattr(instance, node, context[node])
 		if commit:
 			link_creator(instance)
 		return instance
