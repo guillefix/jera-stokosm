@@ -7,4 +7,4 @@ More information about the specs can be found in the wiki section.
 https://github.com/n1k0d49/jera-stokosm/wiki
 
 ###Disclaimer
-Specs created for Jera in Checkvist. CC BY-NC license.
+Specs created for Jera in Checkvist. CC BY-NC license. 2015
