@@ -1,4 +1,5 @@
 # jera-specs
+(See some discussion here http://forum.fractalfuture.net/t/jera-community-platform-a-k-a-stokosm-to-visualize-explore-projects/79/10)
 Specs created for Jera in Checkvist. CC BY-NC license. Jera was in reality a bigger enterprise than what it's found here. To distinguish them this should be refered to as Jera Community Platform, also code-named 'stokosm' (from greek στόχος (aim) and κόσμος (order)).
 
 This is an idea called Jera. Ignore the "Community v1" as it's an old version. Also, I would check the "Data structure" section first to get an idea of what it is about. The overarching idea, reached after a lot of discussions and brain storming, is that the objective of the platform is to facilitate the purposeful creative process; and that this is divided in three main aspects:
