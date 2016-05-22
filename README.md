@@ -1,6 +1,12 @@
 # jera-specs
 Specs created for Jera in Checkvist. CC BY-NC license. Jera was in reality a bigger enterprise than what it's found here. To distinguish them this should be refered to as Jera Community Platform, also code-named 'stokosm' (from greek στόχος (aim) and κόσμος (order)).
 
+##Screenshots:
+
+<img src="scnshot1.png" width="700" alt="Proof of Quadratic Formula">
+
+<img src="scnshot2.png" width="700" alt="Proof of Quadratic Formula">
+
 This is an idea called Jera. Ignore the "Community v1" as it's an old version. Also, I would check the "Data structure" section first to get an idea of what it is about. The overarching idea, reached after a lot of discussions and brain storming, is that the objective of the platform is to facilitate the purposeful creative process; and that this is divided in three main aspects:
 
 *Identifying the things that people want (i.e. specific goals"to
@@ -39,7 +45,7 @@ Active projects
 
 User profile
 
-## Community v1
+## Community v1 (old version)
 
 ### News Feed
 
@@ -162,9 +168,9 @@ The webapp is mainly structured into a Toolbar, a Main Panel, a Connections Bar,
 
 - Filtering / Search Rules (Several alternatives)
   - **Filtering** restricts view to data elements directly connected to the filter node (See data types and structure). Filtering is done through the *Connections Explorer*.  
-  
+
 A _second alternative_ is that browsing is like folders in *List View*, so that when you double click on a node (or highlight and "Enter" many nodes) you loose previous filtering.  
-  
+
 The rest of the specification explores the first alternative
   - Keyword filtering/search
     - Keyword Search in *Current-Screen Search Box* in the *Toolbar*. This search bar can also be selected by pressing Ctrl+F
